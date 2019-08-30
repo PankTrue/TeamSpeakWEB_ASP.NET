@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using easy_ts.ru.Models;
+using TeamSpeakWEB.Models;
 
-namespace easy_ts.ru.Controllers
+namespace TeamSpeakWEB.Controllers
 {
     public class HomeController : Controller
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace easy_ts.ru.Models
+namespace TeamSpeakWEB.Models
 {
     public class ErrorViewModel
     {
