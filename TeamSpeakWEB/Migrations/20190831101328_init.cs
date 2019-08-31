@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace TeamSpeakWEB.Data.Migrations
+namespace TeamSpeakWEB.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -153,6 +153,31 @@ namespace TeamSpeakWEB.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Tsservers",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    port = table.Column<int>(nullable: false),
+                    dns = table.Column<string>(nullable: false),
+                    slots = table.Column<int>(nullable: false),
+                    time_payment = table.Column<DateTime>(nullable: false),
+                    state = table.Column<bool>(nullable: false),
+                    userId = table.Column<string>(nullable: false),
+                    machine_id = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tsservers", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Tsservers_AspNetUsers_userId",
+                        column: x => x.userId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -191,6 +216,11 @@ namespace TeamSpeakWEB.Data.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tsservers_userId",
+                table: "Tsservers",
+                column: "userId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -209,6 +239,9 @@ namespace TeamSpeakWEB.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Tsservers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
