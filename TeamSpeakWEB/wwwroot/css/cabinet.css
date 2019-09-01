@@ -9,14 +9,9 @@ ul.hr li {
     margin-right: 5px; 
 }
 
-table.server-list {
-    th,td
-
-{
+table.server-list th,td{
     border: thin solid;
     padding: 3px;
-}
-
 }
 
 

@@ -10,7 +10,6 @@
     background-image: url('/img/footer.jpg');
 }
 
-
 .footerlinks {
     margin-top: 30px;
 }
@@ -49,8 +48,6 @@
 .clearfix {
     display: block;
 }
-/* End hide from IE-mac */
-
 
 .alert-notice {
     background-color: #d9edf7;
@@ -58,43 +55,28 @@
     color: #31708f;
 }
 
-
-
-<style >
-/* GLOBAL STYLES
-    -------------------------------------------------- */
-/* Padding below the footer and lighter body text */
-/* CUSTOMIZE THE CAROUSEL
-    -------------------------------------------------- */
-/* Carousel base class */
 .carousel {
     margin-bottom: 4rem;
 }
-/* Since positioning the image, we need to help out the caption */
+
 .carousel-caption {
     bottom: 3rem;
     z-index: 10;
 }
 
-/* Declare heights because of positioning of img element */
 .carousel-item {
     height: 20rem;
     background-color: #777;
 }
 
-    .carousel-item > img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-width: 80%;
-        height: 32rem;
-    }
+.carousel-item > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 80%;
+    height: 32rem;
+}
 
-
-/* MARKETING CONTENT
-    -------------------------------------------------- */
-
-/* Center align the text within the three columns below the carousel */
 .marketing .col-lg-4 {
     margin-bottom: 1.5rem;
     text-align: center;
@@ -109,27 +91,17 @@
     margin-left: .75rem;
 }
 
-
-/* Featurettes
-    ------------------------- */
-
 .featurette-divider {
-    margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+    margin: 5rem 0; 
 }
 
-/* Thin out the marketing headings */
 .featurette-heading {
     font-weight: 200;
     line-height: 1;
     letter-spacing: -.05rem;
 }
 
-
-/* RESPONSIVE CSS
-    -------------------------------------------------- */
-
-@@media (min-width: 40em) {
-    /* Bump up size of carousel content */
+@media (min-width: 40em) {
     .carousel-caption p {
         margin-bottom: 1.25rem;
         font-size: 1.25rem;
@@ -141,10 +113,8 @@
     }
 }
 
-@@media (min-width: 62em) {
+@media (min-width: 62em) {
     .featurette-heading {
         margin-top: 7rem;
     }
 }
-
-</style >

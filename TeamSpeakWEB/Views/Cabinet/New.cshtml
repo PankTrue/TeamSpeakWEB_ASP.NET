@@ -1,10 +1,14 @@
-﻿
+﻿@using TeamSpeakWEB.Data
+
+@model Tsserver
+
+
 @{
-    ViewData["Title"] = "New";
+    ViewData["Title"] = "Покупка сервера";
 }
 
 <div class="buy">
-    <h2>Покупка сервера</h2>
+    <h2>@ViewData["Title"]</h2>
 
     <form asp-controller="Cabinet" asp-action="Create" asp-antiforgery="true">
 
@@ -14,7 +18,7 @@
                     <li>Доменное имя</li>
                     <li>
                         <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
-                            <input type="text" name="dns" value="" placeholder="Введите доменное имя" id="dns_input" class="form-control" />
+                            <input type="text" asp-for="dns" value="" placeholder="Введите доменное имя" id="dns_input" class="form-control" />
                             <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
                         </div>
                     </li>
@@ -25,7 +29,7 @@
             <div class="field border">
                 <div class="field">
                     <label>Время оплаты</label>
-                    <select name="time_payment">
+                    <select asp-for="time_payment">
                         <option value="1">1 месяц</option>
                         <option value="2">2 месяца</option>
                         <option value="3">3 месяца</option>
@@ -42,7 +46,7 @@
             </div>
 
             <div class="actions">
-                <input type="submit" name="name" value="Купить сервер" />
+                <input type="submit" value="Купить сервер" />
             </div>
         </div>
 
@@ -51,106 +55,7 @@
 </div>
 
 
-<script type="text/javascript" charset="utf-8">
-    function SetCost() {
-      var data2 = parseInt($('#tsserver_time_payment').val());
-      var data1 = parseInt($("#tsserver_slots").val());
-      var money = parseInt( @ViewBag.current_user.money );
-      var data = data1 * 2 * data2; 
-      if(data>money){
-          var lacks = "Нехватает: " + (data-money).toString() + "руб.";
-      }else{
-          var lacks = "";
-      }
-
-      $('span.cost').text(data);
-      $('span.lacks').text(lacks);
-
-
-    }
-
-
-    $('#dns_input').bind('change', function (event) {
-      var dns = $('#dns_input').val();
-        if ((/^[A-Za-z0-9_-]+$/.test(dns)) && dns != '' ) {
-          $.ajax({
-            type: 'POST',
-            url: "/cabinet/free_dns",
-            data: {dns: dns},
-            success:function(data){
-              if ((data.status) == true){
-                $('#dns_status').text('Домен занят');
-                  $('#dns_status').attr('style','color: red');
-              }else{
-                $('#dns_status').text('Домен свободен');
-                $('#dns_status').attr('style','color: green');
-              }
-            },
-            error:function(data){
-
-            }
-
-          });
-        }else if (dns == ''){
-          $('#dns_status').text('Введите домен(необязательно)');
-        }else{
-          $('#dns_status').text('Недопустимый домен');
-            $('#dns_status').attr('style','color: red');
-        }
-    });
-
-
-
-    $('#tsserver_time_payment').bind('click', function(event){
-      SetCost();
-    });
-
-    $("#tsserver_slots").bind("keyup focusout", function(event){
-      var data = parseInt($("#tsserver_slots").val());
-      if (data>512)
-      {
-        $('#tsserver_slots').val(512);
-        data = 512;
-        SetCost();
-      }
-
-      if (data>=10)
-      {
-        var selector = $("[data-slider]");
-        selector.simpleSlider("setValue", data);
-        SetCost();
-
-      }
-
-    });
-
-    $("#tsserver_slots").bind("focusout", function(event){
-      var data = parseInt($("#tsserver_slots").val());
-      if (data<10)
-      {
-        $('#tsserver_slots').val(10);
-        var selector = $("[data-slider]");
-        selector.simpleSlider("setValue", 10);
-        SetCost();
-
-      }
-    });
-
-    $("[data-slider]").bind("slider:ready slider:changed", function (event, data) {
-      $('#tsserver_slots').val(data.value.toFixed(0));
-      SetCost();
-
-
-    });
-
-
-
+<script>
+    var UserMoney = parseInt(@(ViewBag.current_user.money));
+    //var UserAutoExtension = Boolean(@ViewBag.current_user.auto_extension);
 </script>
-
-
-
-
-
-
-
-

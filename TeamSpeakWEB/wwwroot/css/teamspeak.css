@@ -3,23 +3,23 @@
     width: 300px;
 }
 
-    .tsstatus, .tsstatus *, .tsstatuserror {
-        color: #00000;
-        font-family: Verdana;
-    }
+.tsstatus, .tsstatus *, .tsstatuserror {
+    color: #000000;
+    font-family: Verdana;
+}
 
-        .tsstatus label {
-            border-bottom: 1px solid #aaaaaa;
-        }
+.tsstatus label {
+    border-bottom: 1px solid #aaaaaa;
+}
 
 .tsstatusItem a {
     color: #000000;
 }
 
-    .tsstatusItem a:hover {
-        background-color: #f6f6f6;
-        color: #000099;
-    }
+.tsstatusItem a:hover {
+    background-color: #f6f6f6;
+    color: #000099;
+}
 
 .tsstatuserror {
     color: #ff0000;
