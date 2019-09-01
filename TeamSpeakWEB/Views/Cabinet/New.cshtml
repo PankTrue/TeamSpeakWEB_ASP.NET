@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewData["Title"] = "New";
+}
+
+<div class="buy">
+    <h2>Покупка сервера</h2>
+
+    <form asp-controller="Cabinet" asp-action="Create" asp-antiforgery="true">
+
+        <div class="buy">
+            <div class="field border">
+                <ul class="hr">
+                    <li>Доменное имя</li>
+                    <li>
+                        <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
+                            <input type="text" name="dns" value="" placeholder="Введите доменное имя" id="dns_input" class="form-control" />
+                            <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
+                        </div>
+                    </li>
+                    <li><span id="dns_status">Введите домен(необязательно)</span></li>
+                </ul>
+            </div>
+
+            <div class="field border">
+                <div class="field">
+                    <label>Время оплаты</label>
+                    <select name="time_payment">
+                        <option value="1">1 месяц</option>
+                        <option value="2">2 месяца</option>
+                        <option value="3">3 месяца</option>
+                        <option value="6">6 месяцев</option>
+                        <option value="12">12 месяцев</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="field border">
+                <h4>Стоимость: <span class="cost"></span>руб.</h4>
+                <h5><span class="lacks"></span></h5>
+                <h5>На вашем счету: @ViewBag.current_user.money руб. <a href="/cabinet/pay">Пополнить</a></h5>
+            </div>
+
+            <div class="actions">
+                <input type="submit" name="name" value="Купить сервер" />
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+    function SetCost() {
+      var data2 = parseInt($('#tsserver_time_payment').val());
+      var data1 = parseInt($("#tsserver_slots").val());
+      var money = parseInt( @ViewBag.current_user.money );
+      var data = data1 * 2 * data2; 
+      if(data>money){
+          var lacks = "Нехватает: " + (data-money).toString() + "руб.";
+      }else{
+          var lacks = "";
+      }
+
+      $('span.cost').text(data);
+      $('span.lacks').text(lacks);
+
+
+    }
+
+
+    $('#dns_input').bind('change', function (event) {
+      var dns = $('#dns_input').val();
+        if ((/^[A-Za-z0-9_-]+$/.test(dns)) && dns != '' ) {
+          $.ajax({
+            type: 'POST',
+            url: "/cabinet/free_dns",
+            data: {dns: dns},
+            success:function(data){
+              if ((data.status) == true){
+                $('#dns_status').text('Домен занят');
+                  $('#dns_status').attr('style','color: red');
+              }else{
+                $('#dns_status').text('Домен свободен');
+                $('#dns_status').attr('style','color: green');
+              }
+            },
+            error:function(data){
+
+            }
+
+          });
+        }else if (dns == ''){
+          $('#dns_status').text('Введите домен(необязательно)');
+        }else{
+          $('#dns_status').text('Недопустимый домен');
+            $('#dns_status').attr('style','color: red');
+        }
+    });
+
+
+
+    $('#tsserver_time_payment').bind('click', function(event){
+      SetCost();
+    });
+
+    $("#tsserver_slots").bind("keyup focusout", function(event){
+      var data = parseInt($("#tsserver_slots").val());
+      if (data>512)
+      {
+        $('#tsserver_slots').val(512);
+        data = 512;
+        SetCost();
+      }
+
+      if (data>=10)
+      {
+        var selector = $("[data-slider]");
+        selector.simpleSlider("setValue", data);
+        SetCost();
+
+      }
+
+    });
+
+    $("#tsserver_slots").bind("focusout", function(event){
+      var data = parseInt($("#tsserver_slots").val());
+      if (data<10)
+      {
+        $('#tsserver_slots').val(10);
+        var selector = $("[data-slider]");
+        selector.simpleSlider("setValue", 10);
+        SetCost();
+
+      }
+    });
+
+    $("[data-slider]").bind("slider:ready slider:changed", function (event, data) {
+      $('#tsserver_slots').val(data.value.toFixed(0));
+      SetCost();
+
+
+    });
+
+
+
+</script>
+
+
+
+
+
+
+
+

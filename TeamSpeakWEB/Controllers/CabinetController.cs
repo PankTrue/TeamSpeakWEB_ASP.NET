@@ -10,6 +10,7 @@ using TeamSpeakWEB.Models;
 
 namespace TeamSpeakWEB.Controllers
 {
+    [Authorize]
     public class CabinetController : Controller
     {
         private readonly ApplicationDbContext db;
@@ -21,8 +22,6 @@ namespace TeamSpeakWEB.Controllers
             this.userManager = manager;
         }
 
-
-        [Authorize]
         public IActionResult Index()
         {
             var current_user = userManager.GetUserAsync(HttpContext.User).Result;
@@ -31,6 +30,13 @@ namespace TeamSpeakWEB.Controllers
             ViewBag.current_user = current_user;
 
             return View(tsservers);
+        }
+
+        public IActionResult New()
+        {
+            ViewBag.current_user = userManager.GetUserAsync(HttpContext.User).Result;
+
+            return View();
         }
     }
 }
