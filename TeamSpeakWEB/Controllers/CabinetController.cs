@@ -38,5 +38,12 @@ namespace TeamSpeakWEB.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public IActionResult Create(Tsserver tsserver)
+        {
+
+            return RedirectToAction("Index","Cabinet");
+        }
     }
 }
