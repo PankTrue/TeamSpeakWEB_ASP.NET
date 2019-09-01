@@ -1,0 +1,41 @@
+﻿ul.hr {
+    margin: 0; 
+    padding: 4px;
+}
+
+ul.hr li {
+    font-size: 20px;
+    display: inline; 
+    margin-right: 5px; 
+}
+
+table.server-list {
+    th,td
+
+{
+    border: thin solid;
+    padding: 3px;
+}
+
+}
+
+
+.border {
+    border: 1px solid black;
+    padding: 16px;
+}
+
+.panel {
+    border: 4px;
+}
+
+.select_group {
+    width: 160px;
+    height: 26px;
+}
+
+.clippy {
+    margin-top: -3px;
+    position: relative;
+    top: 3px;
+}
