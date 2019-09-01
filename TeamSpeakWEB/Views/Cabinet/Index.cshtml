@@ -1,0 +1,108 @@
+﻿@using TeamSpeakWEB.Data
+
+@model IEnumerable<Tsserver>
+
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Личный кабинет</h2>
+
+<div>
+        На вашем счету: @ViewBag.current_user.money руб.<a href="/cabinet/pay" class=" btn btn-sm btn-primary">Пополнить</a>
+        <a href="/cabinet/new" class="btn btn-dark">Купить сервер</a>
+        <a href="/cabinet/ref" class="btn btn-primary">Реферальная программа</a>
+</div>
+
+<div>
+    <h4>Авто-продление</h4>
+    <div class="btn-group" id="toggle_event_editing">
+        <button type="button" class="btn btn-info locked_active">OFF</button>
+        <button type="button" class="btn btn-default unlocked_inactive">ON</button>
+    </div>
+</div>
+
+
+<h2>Список серверов</h2>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Доменное имя</th>
+                <th>IP</th>
+                <th>Количество слотов</th>
+                <th>Дата следующего платежа</th>
+                <th>Остаток дней</th>
+                <th>Статус</th>
+
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var ts in Model)
+            {
+            <tr>
+                <td> @(ts.dns + ".easy-ts.ru") </td>
+                <td> 127.0.0.1: @ts.port </td>
+                <td> @ts.slots </td>
+                <td> @ts.time_payment </td>
+                <td>
+                    <span id="left_time-@ts.id">
+                        <script>
+                var left_time = parseInt( @((ts.time_payment - DateTime.Now).Days.ToString()) );
+                  if(left_time > 7){
+                      $('span#left_time-@ts.id').html('<h4>' + left_time + '</h4>').attr('style', 'color: green');
+                  }else if(left_time < 0){
+                      $('span#left_time-@ts.id').html('<h4>' + left_time + '</h4>').attr('style', 'color: red');
+                  }else{
+                      $('span#left_time-@ts.id').html('<h4>' + left_time + '</h4>').attr('style', 'color: yellow');
+                  };
+                        </script>
+                    </span>
+                </td>
+                <td> TODO </td>
+                <td> <a href="/cabinet/panel/@ts.id" class="btn btn-primary">Панель</a> </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<script type="text/javascript" charset="utf-8">
+
+    if((<%= current_user.auto_extension %>) && (($('#toggle_event_editing button').hasClass('locked_active')) || (('#toggle_event_editing button').hasClass('locked_active')))){
+        $('#toggle_event_editing button').eq(0).toggleClass('locked_inactive locked_active btn-default btn-info');
+        $('#toggle_event_editing button').eq(1).toggleClass('unlocked_inactive unlocked_active btn-info btn-default');
+    }
+
+
+    $('#toggle_event_editing button').click(function(){
+        if($(this).hasClass('locked_active') || $(this).hasClass('unlocked_inactive')){
+            $.ajax({
+                type: 'POST',
+                url: "/cabinet/edit_auto_extension",
+                data: {auto_extension: true}
+            });
+            $('#toggle_event_editing button').eq(0).toggleClass('locked_inactive locked_active btn-default btn-info');
+            $('#toggle_event_editing button').eq(1).toggleClass('unlocked_inactive unlocked_active btn-info btn-default');
+        }else{
+          /* code to do when locking */
+            $.ajax({
+                type: 'POST',
+                url: "/cabinet/edit_auto_extension",
+                data: {auto_extension: false}
+            });
+            $('#toggle_event_editing button').eq(0).toggleClass('locked_inactive locked_active btn-default btn-info');
+            $('#toggle_event_editing button').eq(1).toggleClass('unlocked_inactive unlocked_active btn-info btn-default');
+        }})
+
+</script>
+
+
+
+

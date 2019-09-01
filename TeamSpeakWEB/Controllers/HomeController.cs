@@ -22,17 +22,8 @@ namespace TeamSpeakWEB.Controllers
             this.db = db;
             this.userManager = manager;
         }
-        //[Authorize]
         public IActionResult Index()
         {
-                //var ts = new Tsserver { dns = "biba", machine_id = 0, slots = 30,
-                    //state = true, time_payment = DateTime.Now,
-                    //user =  HttpContext.User.Identity.IsAuthenticated ? userManager.GetUserAsync(HttpContext.User).Result : db.Users.FirstOrDefault() };
-            //db.Tsservers.Add(ts);
-            //db.SaveChanges();
-
-            var data = db.Tsservers.ToList().Take(1);
-
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 ViewBag.User = HttpContext.User.Identity.Name;
@@ -42,7 +33,7 @@ namespace TeamSpeakWEB.Controllers
                 ViewBag.User = "User is not authentification";
             }
 
-            return View(data);
+            return View();
         }
 
         public IActionResult Privacy()
