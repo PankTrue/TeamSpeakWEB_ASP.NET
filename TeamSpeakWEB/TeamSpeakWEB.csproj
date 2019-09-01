@@ -16,6 +16,10 @@
     <Compile Remove="Data\Migrations\20190831092041_add user.Designer.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\css\StyleSheet.css" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
