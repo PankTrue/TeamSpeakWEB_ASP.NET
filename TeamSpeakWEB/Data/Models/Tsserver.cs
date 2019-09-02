@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using TeamSpeakWEB.Models;
 
-namespace TeamSpeakWEB.Data
+
+namespace TeamSpeakWEB.Models
 {
     public class Tsserver
     {

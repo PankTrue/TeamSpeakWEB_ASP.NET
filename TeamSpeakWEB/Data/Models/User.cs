@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace TeamSpeakWEB.Models
 {
     public class User : IdentityUser
