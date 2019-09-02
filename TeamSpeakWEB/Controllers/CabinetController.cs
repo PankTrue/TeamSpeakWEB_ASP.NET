@@ -47,6 +47,10 @@ namespace TeamSpeakWEB.Controllers
             tsserver.machine_id = 0;
             tsserver.port = (new Random(DateTime.Now.Millisecond)).Next(65565);
             tsserver.user = GetCurrentUser();
+
+            db.Tsservers.Add(tsserver);
+            db.SaveChanges();
+
             return RedirectToAction("Index","Cabinet");
         }
 
