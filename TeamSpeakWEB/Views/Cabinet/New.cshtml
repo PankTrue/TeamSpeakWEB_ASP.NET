@@ -26,14 +26,14 @@
 
             <div class="border">
                 <label>Количество слотов</label>
-                  <td><input type="number" asp-for="slots" value="10" min="10" max="512" /></td>
+                <td><input id="slots" type="number" asp-for="slots" value="10" min="10" max="512" /></td>
             </div>
 
 
             <div class="field border">
                 <div class="field">
                     <label>Время оплаты</label>
-                    <select asp-for="time_payment">
+                    <select id="tsserver_time_payment" asp-for="time_payment">
                         <option value="1">1 месяц</option>
                         <option value="2">2 месяца</option>
                         <option value="3">3 месяца</option>
@@ -58,9 +58,15 @@
 
 </div>
 
+@section Scripts
+{
+    <script src="~/js/cabinet.js"></script>
+}
 
-<script src="~/js/cabinet.js">
-    var UserMoney = parseInt(@(ViewBag.current_user.money));
-    var UserAutoExtension = true;
-    //var UserAutoExtension = Boolean(@*@ViewBag.current_user.auto_extension*@);
+<script>
+        var UserMoney = parseInt(@(ViewBag.current_user.money));
+        var UserAutoExtension = true;
+        //var UserAutoExtension = Boolean(@*@ViewBag.current_user.auto_extension*@);
 </script>
+
+
