@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeamSpeakWEB.Data;
-using TeamSpeakWEB.Models;
+
 
 namespace TeamSpeakWEB.Migrations
 {
@@ -130,7 +130,7 @@ namespace TeamSpeakWEB.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TeamSpeakWEB.Data.Tsserver", b =>
+            modelBuilder.Entity("TeamSpeakWEB.Models.Tsserver", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -259,7 +259,7 @@ namespace TeamSpeakWEB.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("TeamSpeakWEB.Data.Tsserver", b =>
+            modelBuilder.Entity("TeamSpeakWEB.Models.Tsserver", b =>
                 {
                     b.HasOne("TeamSpeakWEB.Models.User", "user")
                         .WithMany()

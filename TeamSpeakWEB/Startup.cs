@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using TeamSpeakWEB.Models;
 using TeamSpeakWEB.Data;
 
+
 namespace TeamSpeakWEB
 {
     public class Startup
@@ -38,6 +39,7 @@ namespace TeamSpeakWEB
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddIdentity<User,IdentityRole>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
