@@ -330,3 +330,5 @@ ASALocalRun/
 .mfractor/
 
 TeamSpeakWEB/wwwroot/lib/
+TeamSpeakWEB/appsettings.Development.json
+TeamSpeakWEB/appsettings.json
