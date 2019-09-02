@@ -24,7 +24,7 @@ namespace TeamSpeakWEB.Controllers
 
         public IActionResult Index()
         {
-            var current_user = userManager.GetUserAsync(HttpContext.User).Result;
+            var current_user = GetCurrentUser();
             var tsservers = db.Tsservers.Where(id => (id.user.Id == current_user.Id)).ToList();
 
             ViewBag.current_user = current_user;
@@ -34,7 +34,7 @@ namespace TeamSpeakWEB.Controllers
 
         public IActionResult New()
         {
-            ViewBag.current_user = userManager.GetUserAsync(HttpContext.User).Result;
+            ViewBag.current_user = GetCurrentUser();
 
             return View();
         }
@@ -42,8 +42,18 @@ namespace TeamSpeakWEB.Controllers
         [HttpPost]
         public IActionResult Create(Tsserver tsserver)
         {
-
+            tsserver.time_payment = (DateTime.Now.AddMonths(tsserver.time_payment.Day));
+            tsserver.state = true;
+            tsserver.machine_id = 0;
+            tsserver.port = (new Random(DateTime.Now.Millisecond)).Next(65565);
+            tsserver.user = GetCurrentUser();
             return RedirectToAction("Index","Cabinet");
+        }
+
+
+        private User GetCurrentUser()
+        {
+            return userManager.GetUserAsync(HttpContext.User).Result;
         }
     }
 }
