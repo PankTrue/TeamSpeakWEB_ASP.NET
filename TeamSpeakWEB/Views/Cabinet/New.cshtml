@@ -24,6 +24,12 @@
                 </ul>
             </div>
 
+            <div class="border">
+                <label>Количество слотов</label>
+                  <td><input type="number" asp-for="slots" value="10" min="10" max="512" /></td>
+            </div>
+
+
             <div class="field border">
                 <div class="field">
                     <label>Время оплаты</label>
@@ -53,7 +59,8 @@
 </div>
 
 
-<script>
+<script src="~/js/cabinet.js">
     var UserMoney = parseInt(@(ViewBag.current_user.money));
-    var UserAutoExtension = Boolean(@*@ViewBag.current_user.auto_extension*@);
+    var UserAutoExtension = true;
+    //var UserAutoExtension = Boolean(@*@ViewBag.current_user.auto_extension*@);
 </script>
