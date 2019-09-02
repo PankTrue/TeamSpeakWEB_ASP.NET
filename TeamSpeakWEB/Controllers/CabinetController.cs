@@ -57,7 +57,7 @@ namespace TeamSpeakWEB.Controllers
         [HttpPost]
         public IActionResult free_dns(string dns)
         {
-            if (db.Tsservers.Where(id => id.dns == dns).Take(1).FirstOrDefault() == null)
+            if (db.Tsservers.Where(id => id.dns == dns).Count() == 0)
                 return Content("true");
             else
                 return Content("false");
