@@ -54,6 +54,16 @@ namespace TeamSpeakWEB.Controllers
             return RedirectToAction("Index","Cabinet");
         }
 
+        [HttpPost]
+        public IActionResult free_dns(string dns)
+        {
+            if (db.Tsservers.Where(id => id.dns == dns).Take(1).FirstOrDefault() == null)
+                return Content("true");
+            else
+                return Content("false");
+        }
+
+
 
         private User GetCurrentUser()
         {

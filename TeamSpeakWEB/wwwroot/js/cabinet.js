@@ -21,7 +21,7 @@
                 url: "/cabinet/free_dns",
                 data: { dns: dns },
                 success: function (data) {
-                    if ((data.status) == true) {
+                    if (data == "false") {
                         $('#dns_status').text('Домен занят');
                         $('#dns_status').attr('style', 'color: red');
                     } else {
