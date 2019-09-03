@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewData["Title"] = "Panel";
+}
+
+<h1>Panel</h1>
+
+<style>
+    a.btn {
+        width: 200px;
+    }
+</style>
+
+
+
+<div class="row">
+    <div class="col-md-6">
+
+        <div class="functions">
+            <ul style="list-style-type: none">
+                <li> <a asp-controller="Cabinet" asp-action="Token" asp-route-id="@ViewBag.id" class="btn btn-primary">Токены</a></li>
+                <li> <a asp-controller="Cabinet" asp-action="Token" asp-route-id="@ViewBag.id" class="btn btn-primary">Токены</a></li>
+                
+                
+                
+                
+                @*<li><%= link_to 'Токены', cabinet_token_path(@ts), class: 'btn btn-primary'%></li>
+                <li><%= link_to 'Настройки', cabinet_settings_path(@ts), class: 'btn btn-primary' %></li>
+                <li><%= link_to 'Редактировать', cabinet_edit_path(@ts), data: { turbolinks: false }, class: 'btn btn-primary'%></li>
+                <li><%= link_to 'Бекапы', cabinet_backups_path(@ts), class: 'btn btn-primary' %></li>
+                <li><%= link_to 'Вкл/Выкл', cabinet_work_path(@ts), method: :post, class: 'btn btn-primary' %></li>
+                <li><%= link_to 'Продлить', cabinet_extend_path(@ts), class: 'btn btn-primary'%></li>
+                <li><%= link_to 'Сбросить права', cabinet_reset_permissions_path(@ts), data: {confirm: 'Вы уверены?'}, method: :post, class: 'btn btn-danger'%></li>
+                <li><%= link_to 'Удалить',  cabinet_destroy_path(@ts), method: :delete, data: { confirm: 'Вы уверены? Ваш сервер будет полностью удален без возврата средств!' }, class: 'btn btn-danger' %></li>*@
+            
+            
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+
+        <div class="tsstatus">
+           @* <% panel = panel_gen.to_s.force_encoding("UTF-8") %>*@
+            @*<%= @count_users %>/<%= @info['virtualserver_maxclients'] %> <br>*@
+            @*<%= raw panel%>*@
+        </div>
+
+        <!--<div class="tsinfo">-->
+        <!--Uptime: <%= Time.at(info['virtualserver_uptime'].to_i).strftime("%-d:%H:%M:%S") %> <br>-->
+        <!-- Packet loss: <%= info['virtualserver_total_packetloss_total'] %> -->
+        <!--</div>-->
+
+    </div>
+
+
+</div>

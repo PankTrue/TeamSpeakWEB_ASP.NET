@@ -51,7 +51,7 @@ namespace TeamSpeakWEB.Controllers
             db.Tsservers.Add(tsserver);
             db.SaveChanges();
 
-            return RedirectToAction("Index","Cabinet");
+            return RedirectToAction("Index", "Cabinet");
         }
 
         [HttpPost]
@@ -61,6 +61,17 @@ namespace TeamSpeakWEB.Controllers
                 return Content("true");
             else
                 return Content("false");
+        }
+
+        [Route("/Cabinet/Panel/{id:int}")]
+        public IActionResult Panel(int id)
+        {
+            ViewBag.id = id;
+            if (db.Tsservers.Find(id).user.Id != GetCurrentUser().Id)
+            {
+                return RedirectToAction("Index", "Cabinet");
+            }
+            return View();
         }
 
 
