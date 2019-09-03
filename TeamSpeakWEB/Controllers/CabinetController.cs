@@ -41,7 +41,7 @@ namespace TeamSpeakWEB.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost,ValidateAntiForgeryToken]
         public IActionResult Create(Tsserver tsserver)
         {
             tsserver.TimePayment = (DateTime.Now.AddMonths(tsserver.TimePayment.Day));
@@ -53,6 +53,13 @@ namespace TeamSpeakWEB.Controllers
             db.Tsservers.Add(tsserver);
             db.SaveChanges();
 
+            return RedirectToAction("Index", "Cabinet");
+        }
+
+        [HttpDelete]
+        public IActionResult Destroy(int id)
+        {
+            db.Tsservers.Remove(new Tsserver { Id = id});
             return RedirectToAction("Index", "Cabinet");
         }
 
