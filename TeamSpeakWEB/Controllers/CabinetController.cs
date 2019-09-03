@@ -25,7 +25,7 @@ namespace TeamSpeakWEB.Controllers
         public IActionResult Index()
         {
             var current_user = GetCurrentUser();
-            var tsservers = db.Tsservers.Where(id => (id.user.Id == current_user.Id)).ToList();
+            var tsservers = db.Tsservers.Where(id => (id.User.Id == current_user.Id)).ToList();
 
             ViewBag.current_user = current_user;
 
@@ -34,7 +34,9 @@ namespace TeamSpeakWEB.Controllers
 
         public IActionResult New()
         {
-            ViewBag.current_user = GetCurrentUser();
+            var current_user = GetCurrentUser();
+
+            ViewBag.current_user = current_user;
 
             return View();
         }
@@ -42,11 +44,11 @@ namespace TeamSpeakWEB.Controllers
         [HttpPost]
         public IActionResult Create(Tsserver tsserver)
         {
-            tsserver.time_payment = (DateTime.Now.AddMonths(tsserver.time_payment.Day));
-            tsserver.state = true;
-            tsserver.machine_id = 0;
-            tsserver.port = (new Random(DateTime.Now.Millisecond)).Next(65565);
-            tsserver.user = GetCurrentUser();
+            tsserver.TimePayment = (DateTime.Now.AddMonths(tsserver.TimePayment.Day));
+            tsserver.State = true;
+            tsserver.MachineId = 0;
+            tsserver.Port = (new Random(DateTime.Now.Millisecond)).Next(65565);
+            tsserver.User = GetCurrentUser();
 
             db.Tsservers.Add(tsserver);
             db.SaveChanges();
@@ -57,7 +59,7 @@ namespace TeamSpeakWEB.Controllers
         [HttpPost]
         public IActionResult free_dns(string dns)
         {
-            if (db.Tsservers.Where(id => id.dns == dns).Count() == 0)
+            if (db.Tsservers.Where(id => id.Dns == dns).Count() == 0)
                 return Content("true");
             else
                 return Content("false");
@@ -67,7 +69,7 @@ namespace TeamSpeakWEB.Controllers
         public IActionResult Panel(int id)
         {
             ViewBag.id = id;
-            if (db.Tsservers.Find(id).user.Id != GetCurrentUser().Id)
+            if (db.Tsservers.Find(id).User.Id != GetCurrentUser().Id)
             {
                 return RedirectToAction("Index", "Cabinet");
             }

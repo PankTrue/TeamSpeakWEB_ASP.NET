@@ -41,15 +41,15 @@ namespace TeamSpeakWEB.Data.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    money = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    referalFromId = table.Column<string>(nullable: true)
+                    Money = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ReferalFromId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_AspNetUsers_referalFromId",
-                        column: x => x.referalFromId,
+                        name: "FK_AspNetUsers_AspNetUsers_ReferalFromId",
+                        column: x => x.ReferalFromId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -165,22 +165,22 @@ namespace TeamSpeakWEB.Data.Migrations
                 name: "Tsservers",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    port = table.Column<int>(nullable: false),
-                    dns = table.Column<string>(nullable: false),
-                    slots = table.Column<int>(nullable: false),
-                    time_payment = table.Column<DateTime>(nullable: false),
-                    state = table.Column<bool>(nullable: false),
-                    userId = table.Column<string>(nullable: false),
-                    machine_id = table.Column<int>(nullable: false)
+                    Port = table.Column<int>(nullable: false),
+                    Dns = table.Column<string>(nullable: false),
+                    Slots = table.Column<int>(nullable: false),
+                    TimePayment = table.Column<DateTime>(nullable: false),
+                    State = table.Column<bool>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
+                    MachineId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tsservers", x => x.id);
+                    table.PrimaryKey("PK_Tsservers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tsservers_AspNetUsers_userId",
-                        column: x => x.userId,
+                        name: "FK_Tsservers_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -226,14 +226,14 @@ namespace TeamSpeakWEB.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_referalFromId",
+                name: "IX_AspNetUsers_ReferalFromId",
                 table: "AspNetUsers",
-                column: "referalFromId");
+                column: "ReferalFromId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Tsservers_userId",
+                name: "IX_Tsservers_UserId",
                 table: "Tsservers",
-                column: "userId");
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

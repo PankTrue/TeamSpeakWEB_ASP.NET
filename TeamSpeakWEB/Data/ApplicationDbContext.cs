@@ -17,13 +17,13 @@ namespace TeamSpeakWEB.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>()
-                    .HasMany(u => u.tsservers)
-                    .WithOne(ts => ts.user)
+                    .HasMany(u => u.TsServers)
+                    .WithOne(ts => ts.User)
                     .IsRequired();
 
             builder.Entity<User>()
-                .HasOne(u => u.referalFrom)
-                .WithMany(u => u.refUsers)
+                .HasOne(u => u.ReferalFrom)
+                .WithMany(u => u.RefUsers)
                 .IsRequired(false);
 
             base.OnModelCreating(builder);

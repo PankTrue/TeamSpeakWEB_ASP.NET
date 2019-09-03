@@ -11,7 +11,7 @@
 <h2>@ViewData["Title"]</h2>
 
 <div>
-    На вашем счету: @ViewBag.current_user.money руб.<a href="/cabinet/pay" class=" btn btn-sm btn-primary">Пополнить</a>
+    На вашем счету: @ViewBag.current_user.Money руб.<a href="/cabinet/pay" class=" btn btn-sm btn-primary">Пополнить</a>
     <a href="/cabinet/new" class="btn btn-dark">Купить сервер</a>
     <a href="/cabinet/ref" class="btn btn-primary">Реферальная программа</a>
 </div>
@@ -35,13 +35,13 @@
             @foreach (var ts in Model)
             {
             <tr>
-                <td> @(ts.dns + ".easy-ts.ru") </td>
-                <td> 127.0.0.1: @ts.port </td>
-                <td> @ts.slots </td>
-                <td> @ts.time_payment </td>
+                <td> @(ts.Dns + ".easy-ts.ru") </td>
+                <td> 127.0.0.1: @ts.Port </td>
+                <td> @ts.Slots </td>
+                <td> @ts.TimePayment </td>
                 <td>
                     @{
-                        var left_time = (ts.time_payment - DateTime.Now).Days;
+                        var left_time = (ts.TimePayment - DateTime.Now).Days;
 
                         if (left_time > 7){
                             <h5 style="color: green">@left_time</h5>
@@ -55,7 +55,7 @@
                     }
                 </td>
                 <td> TODO </td>
-                <td> <a asp-controller="Cabinet" asp-action="Panel" asp-route-id="@ts.id" class="btn btn-primary">Панель</a> </td>
+                <td> <a asp-controller="Cabinet" asp-action="Panel" asp-route-id="@ts.Id" class="btn btn-primary">Панель</a> </td>
             </tr>
             }
         </tbody>

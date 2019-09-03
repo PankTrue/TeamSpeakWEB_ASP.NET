@@ -11,28 +11,26 @@ namespace TeamSpeakWEB.Models
     public class Tsserver
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        public int port { get; set; }
+        public int Port { get; set; }
 
         [Required]
-        public string dns { get; set; }
+        public string Dns { get; set; }
 
         [Required]
-        public int slots { get; set; }
+        public int Slots { get; set; }
 
         [Required]
-        public DateTime time_payment { get; set; }
+        public DateTime TimePayment { get; set; }
 
         [Required]
-        public bool state { get; set; }
+        public bool State { get; set; }
 
-        public virtual User user { get; set; }
+        public virtual User User { get; set; }
 
         [Required]
-        public int machine_id { get; set; }
-
-
+        public int MachineId { get; set; }
     }
 }

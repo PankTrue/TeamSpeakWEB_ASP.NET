@@ -10,7 +10,7 @@ using TeamSpeakWEB.Data;
 namespace TeamSpeakWEB.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190902183104_init")]
+    [Migration("20190903073812_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -133,29 +133,29 @@ namespace TeamSpeakWEB.Data.Migrations
 
             modelBuilder.Entity("TeamSpeakWEB.Models.Tsserver", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("dns")
+                    b.Property<string>("Dns")
                         .IsRequired();
 
-                    b.Property<int>("machine_id");
+                    b.Property<int>("MachineId");
 
-                    b.Property<int>("port");
+                    b.Property<int>("Port");
 
-                    b.Property<int>("slots");
+                    b.Property<int>("Slots");
 
-                    b.Property<bool>("state");
+                    b.Property<bool>("State");
 
-                    b.Property<DateTime>("time_payment");
+                    b.Property<DateTime>("TimePayment");
 
-                    b.Property<string>("userId")
+                    b.Property<string>("UserId")
                         .IsRequired();
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
-                    b.HasIndex("userId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tsservers");
                 });
@@ -179,6 +179,9 @@ namespace TeamSpeakWEB.Data.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
 
+                    b.Property<decimal>("Money")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
@@ -191,17 +194,14 @@ namespace TeamSpeakWEB.Data.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed");
 
+                    b.Property<string>("ReferalFromId");
+
                     b.Property<string>("SecurityStamp");
 
                     b.Property<bool>("TwoFactorEnabled");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
-
-                    b.Property<decimal>("money")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("referalFromId");
 
                     b.HasKey("Id");
 
@@ -213,7 +213,7 @@ namespace TeamSpeakWEB.Data.Migrations
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.HasIndex("referalFromId");
+                    b.HasIndex("ReferalFromId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -265,17 +265,17 @@ namespace TeamSpeakWEB.Data.Migrations
 
             modelBuilder.Entity("TeamSpeakWEB.Models.Tsserver", b =>
                 {
-                    b.HasOne("TeamSpeakWEB.Models.User", "user")
-                        .WithMany("tsservers")
-                        .HasForeignKey("userId")
+                    b.HasOne("TeamSpeakWEB.Models.User", "User")
+                        .WithMany("TsServers")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TeamSpeakWEB.Models.User", b =>
                 {
-                    b.HasOne("TeamSpeakWEB.Models.User", "referalFrom")
-                        .WithMany("refUsers")
-                        .HasForeignKey("referalFromId");
+                    b.HasOne("TeamSpeakWEB.Models.User", "ReferalFrom")
+                        .WithMany("RefUsers")
+                        .HasForeignKey("ReferalFromId");
                 });
 #pragma warning restore 612, 618
         }
