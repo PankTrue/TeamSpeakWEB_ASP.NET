@@ -14,6 +14,21 @@ namespace TeamSpeakWEB.Data
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<User>()
+                    .HasMany(u => u.tsservers)
+                    .WithOne(ts => ts.user)
+                    .IsRequired();
+
+            builder.Entity<User>()
+                .HasOne(u => u.referalFrom)
+                .WithMany(u => u.refUsers)
+                .IsRequired(false);
+
+            base.OnModelCreating(builder);
+        }
+
         public DbSet<Tsserver> Tsservers { get; set; }
     }
 }

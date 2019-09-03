@@ -28,8 +28,7 @@ namespace TeamSpeakWEB.Models
         [Required]
         public bool state { get; set; }
 
-        [Required]
-        public User user { get; set; }
+        public virtual User user { get; set; }
 
         [Required]
         public int machine_id { get; set; }

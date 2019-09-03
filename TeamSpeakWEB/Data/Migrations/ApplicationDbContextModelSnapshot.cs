@@ -6,8 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TeamSpeakWEB.Data;
 
-
-namespace TeamSpeakWEB.Migrations
+namespace TeamSpeakWEB.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -197,9 +196,10 @@ namespace TeamSpeakWEB.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256);
 
-                    b.Property<decimal>("money");
+                    b.Property<decimal>("money")
+                        .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("referal");
+                    b.Property<string>("referalFromId");
 
                     b.HasKey("Id");
 
@@ -210,6 +210,8 @@ namespace TeamSpeakWEB.Migrations
                         .IsUnique()
                         .HasName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("referalFromId");
 
                     b.ToTable("AspNetUsers");
                 });
@@ -262,9 +264,16 @@ namespace TeamSpeakWEB.Migrations
             modelBuilder.Entity("TeamSpeakWEB.Models.Tsserver", b =>
                 {
                     b.HasOne("TeamSpeakWEB.Models.User", "user")
-                        .WithMany()
+                        .WithMany("tsservers")
                         .HasForeignKey("userId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TeamSpeakWEB.Models.User", b =>
+                {
+                    b.HasOne("TeamSpeakWEB.Models.User", "referalFrom")
+                        .WithMany("refUsers")
+                        .HasForeignKey("referalFromId");
                 });
 #pragma warning restore 612, 618
         }
