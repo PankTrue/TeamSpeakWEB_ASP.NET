@@ -41,6 +41,16 @@ namespace TeamSpeakWEB.Controllers
             return View();
         }
 
+        public IActionResult Edit(int id)
+        {
+            var tsserver = db.Tsservers.Find(id);
+
+            if (tsserver == null || tsserver.User.Id != GetCurrentUser().Id)
+                return RedirectToAction("Index","Cabinet");
+
+            return View(tsserver);
+        }
+
         [HttpPost,ValidateAntiForgeryToken]
         public IActionResult Create(Tsserver tsserver)
         {
@@ -59,14 +69,21 @@ namespace TeamSpeakWEB.Controllers
         [HttpDelete]
         public IActionResult Destroy(int id)
         {
+            var tsserver = db.Tsservers.Find(id);
+
+            if (tsserver == null || tsserver.User.Id != GetCurrentUser().Id)
+                return RedirectToAction("Index","Cabinet");
+
             db.Tsservers.Remove(new Tsserver { Id = id});
+            db.SaveChanges();
+
             return RedirectToAction("Index", "Cabinet");
         }
 
         [HttpPost]
         public IActionResult free_dns(string dns)
         {
-            if (db.Tsservers.Where(id => id.Dns == dns).Count() == 0)
+            if (!db.Tsservers.Where(id => id.Dns == dns).Any())
                 return Content("true");
             else
                 return Content("false");
@@ -76,13 +93,12 @@ namespace TeamSpeakWEB.Controllers
         public IActionResult Panel(int id)
         {
             ViewBag.id = id;
-            if (db.Tsservers.Find(id).User.Id != GetCurrentUser().Id)
-            {
+            var tsserver = db.Tsservers.Find(id);
+            if (tsserver == null || tsserver.User.Id != GetCurrentUser().Id)
                 return RedirectToAction("Index", "Cabinet");
-            }
+
             return View();
         }
-
 
 
         private User GetCurrentUser()
