@@ -45,6 +45,7 @@ namespace TeamSpeakWEB
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddFlashes();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
