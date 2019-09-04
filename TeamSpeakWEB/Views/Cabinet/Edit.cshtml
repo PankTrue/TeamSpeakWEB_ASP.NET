@@ -1,7 +1,44 @@
-﻿
+﻿@model Tsserver
+
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h3>Редактирование сервера</h3>
 
+
+<div class="edit">
+
+    <form asp-controller="Cabinet" asp-action="Update" asp-antiforgery="true">
+
+        <div class="border">
+            <ul class="hr">
+                <li><label>Доменное имя:</label></li>
+                <li>
+                    <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
+                        <input type="text" asp-for="Dns" value="@Model.Dns" placeholder="Введите новое доменное имя" class="form-control" />
+                        <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
+                        <span asp-validation-for="Dns"></span>
+                    </div>
+                </li>
+                <li><span id="dns_status">Введите домен(необязательно)</span></li>
+            </ul>
+        </div>
+
+        <div class="border">
+            <label>Кол-во слотов</label>
+            <input type="number" asp-for="Slots" value="@Model.Slots" class="form-control" />
+
+        </div>
+
+        <div class="border">
+            <h3>Стоимость: <span class="cost">0</span></h3>
+        </div>
+
+        <div class="actions">
+            <input type="submit" value="Обновить сервер" />
+        </div>
+
+    </form>
+
+</div>

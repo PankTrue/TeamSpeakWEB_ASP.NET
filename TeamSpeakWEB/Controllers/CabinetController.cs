@@ -83,6 +83,34 @@ namespace TeamSpeakWEB.Controllers
             return RedirectToAction("Index", "Cabinet");
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(Tsserver tsserver)
+        {
+            var current_user = GetCurrentUser();
+            var ts = db.Tsservers.Find(tsserver.Id);
+
+            if (ts == null || ts.User.Id != current_user.Id)
+            {
+                flasher.Flash("danger", "Сервер не найдет или вам не пренадлежит");
+                return RedirectToAction("Index","Cabinet");
+            }
+
+            db.Tsservers.Update(tsserver);
+
+            try{
+                db.SaveChanges();
+            }
+            catch {
+                flasher.Flash("danger", "Не удалось редактировать сервер");
+                return RedirectToAction("Index", "Cabinet");
+            }
+
+            flasher.Flash("success", "Сервер успешно редактирован");
+            return RedirectToAction("Index","Cabinet");
+        }
+
+
         [HttpDelete]
         public IActionResult Destroy(int id)
         {
