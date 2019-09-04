@@ -18,6 +18,7 @@
                         <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
                             <input type="text" asp-for="Dns" value="" placeholder="Введите доменное имя" id="dns_input" class="form-control" />
                             <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
+                            <span asp-validation-for="Dns"></span>
                         </div>
                     </li>
                     <li><span id="dns_status">Введите домен(необязательно)</span></li>
@@ -27,6 +28,7 @@
             <div class="border">
                 <label>Количество слотов</label>
                 <td><input id="slots" type="number" asp-for="Slots" value="10" min="10" max="512" /></td>
+                <span asp-validation-for="Slots"></span>
             </div>
 
 
@@ -40,6 +42,7 @@
                         <option value="6">6 месяцев</option>
                         <option value="12">12 месяцев</option>
                     </select>
+                    <span asp-validation-for="TimePayment"></span>
                 </div>
             </div>
 
