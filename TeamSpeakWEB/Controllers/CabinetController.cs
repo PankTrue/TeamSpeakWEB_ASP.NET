@@ -96,7 +96,10 @@ namespace TeamSpeakWEB.Controllers
                 return RedirectToAction("Index","Cabinet");
             }
 
-            db.Tsservers.Update(tsserver);
+            ts.Dns = tsserver.Dns;
+            ts.Slots = tsserver.Slots;
+
+            db.Tsservers.Update(ts);
 
             try{
                 db.SaveChanges();
