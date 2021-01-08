@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Flash;
+﻿using Core.Flash;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
 using TeamSpeakWEB.Data;
 using TeamSpeakWEB.Filters;
 using TeamSpeakWEB.Models;
@@ -15,32 +13,32 @@ namespace TeamSpeakWEB.Controllers
     [Authorize]
     public class CabinetController : Controller
     {
-        private readonly ApplicationDbContext db;
-        private readonly UserManager<User> userManager;
-        private readonly IFlasher flasher;
+        private readonly ApplicationDbContext _db;
+        private readonly UserManager<User> _userManager;
+        private readonly IFlasher _flasher;
 
         public CabinetController(ApplicationDbContext db, UserManager<User> userManager, IFlasher flasher)
         {
-            this.db = db;
-            this.userManager = userManager;
-            this.flasher = flasher;
+            this._db = db;
+            this._userManager = userManager;
+            this._flasher = flasher;
         }
 
         public IActionResult Index()
         {
-            var current_user = GetCurrentUser();
-            var tsservers = db.Tsservers.Where(id => (id.User.Id == current_user.Id)).ToList();
+            var currentUser = GetCurrentUser();
+            var tsServer = _db.Tsservers.Where(id => (id.User.Id == currentUser.Id)).ToList();
 
-            ViewBag.current_user = current_user;
+            ViewBag.current_user = currentUser;
 
-            return View(tsservers);
+            return View(tsServer);
         }
 
         public IActionResult New()
         {
-            var current_user = GetCurrentUser();
+            var currentUser = GetCurrentUser();
 
-            ViewBag.current_user = current_user;
+            ViewBag.current_user = currentUser;
 
             return View();
         }
@@ -48,9 +46,9 @@ namespace TeamSpeakWEB.Controllers
         [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Edit(int id)
         {
-            var tsserver = db.Tsservers.Find(id);
+            var tsServer = _db.Tsservers.Find(id);
 
-            return View(tsserver);
+            return View(tsServer);
         }
 
         [HttpPost]
@@ -63,19 +61,19 @@ namespace TeamSpeakWEB.Controllers
             tsserver.Port = (new Random(DateTime.Now.Millisecond)).Next(65565);
             tsserver.User = GetCurrentUser();
 
-            db.Tsservers.Add(tsserver);
+            _db.Tsservers.Add(tsserver);
 
             try
             {
-                db.SaveChanges();
+                _db.SaveChanges();
             }
             catch
             {
-                flasher.Flash("danger", "Не удалось создать сервер");
+                _flasher.Flash("danger", "Не удалось создать сервер");
                 return RedirectToAction("Index", "Cabinet");
             }
 
-            flasher.Flash("success", "Сервер успешно создан");
+            _flasher.Flash("success", "Сервер успешно создан");
 
             return RedirectToAction("Index", "Cabinet");
         }
@@ -85,24 +83,24 @@ namespace TeamSpeakWEB.Controllers
         [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Update(Tsserver tsserver)
         {
-            var current_user = GetCurrentUser();
-            var ts = db.Tsservers.Find(tsserver.Id);
+            var currentUser = GetCurrentUser();
+            var ts = _db.Tsservers.Find(tsserver.Id);
 
 
             ts.Dns = tsserver.Dns;
             ts.Slots = tsserver.Slots;
 
-            db.Tsservers.Update(ts);
+            _db.Tsservers.Update(ts);
 
             try{
-                db.SaveChanges();
+                _db.SaveChanges();
             }
             catch {
-                flasher.Flash("danger", "Не удалось редактировать сервер");
+                _flasher.Flash("danger", "Не удалось редактировать сервер");
                 return RedirectToAction("Index", "Cabinet");
             }
 
-            flasher.Flash("success", "Сервер успешно редактирован");
+            _flasher.Flash("success", "Сервер успешно редактирован");
             return RedirectToAction("Index","Cabinet");
         }
 
@@ -110,17 +108,17 @@ namespace TeamSpeakWEB.Controllers
         [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Destroy(int id)
         {
-            db.Tsservers.Remove(new Tsserver { Id = id});
+            _db.Tsservers.Remove(new Tsserver { Id = id});
 
             try {
-                db.SaveChanges();
+                _db.SaveChanges();
             }
             catch {
-                flasher.Flash("danger", "Не удалось удалить сервер");
+                _flasher.Flash("danger", "Не удалось удалить сервер");
                 return RedirectToAction("Index", "Cabinet");
             }
 
-            flasher.Flash("success", "Сервер успешно удален");
+            _flasher.Flash("success", "Сервер успешно удален");
 
             return RedirectToAction("Index", "Cabinet");
         }
@@ -128,7 +126,7 @@ namespace TeamSpeakWEB.Controllers
         [HttpPost]
         public IActionResult free_dns(string dns)
         {
-            if (!db.Tsservers.Where(id => id.Dns == dns).Any())
+            if (!_db.Tsservers.Where(id => id.Dns == dns).Any())
                 return Content("true");
             else
                 return Content("false");
@@ -137,15 +135,15 @@ namespace TeamSpeakWEB.Controllers
         [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Panel(int id)
         {
-            ViewBag.id = id;
+            var ts = _db.Tsservers.Find(id);
 
-            return View();
+            return View(ts);
         }
 
 
         private User GetCurrentUser()
         {
-            return userManager.GetUserAsync(HttpContext.User).Result;
+            return _userManager.GetUserAsync(HttpContext.User).Result;
         }
     }
 }

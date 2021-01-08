@@ -19,12 +19,14 @@ namespace TeamSpeakWEB
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            this.env = env;
         }
 
         public IConfiguration Configuration { get; }
+        private readonly IWebHostEnvironment env;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -44,7 +46,15 @@ namespace TeamSpeakWEB
                 .AddDefaultTokenProviders();
 
 
-            services.AddControllersWithViews();
+            var mvcBuilder = services.AddControllersWithViews();
+
+            #if DEBUG
+            if (env.IsDevelopment())
+            {
+                mvcBuilder.AddRazorRuntimeCompilation();
+            }
+            #endif
+
 
             services.AddFlashes();
 
@@ -55,7 +65,7 @@ namespace TeamSpeakWEB
             services.AddScoped<TsserverBelongsToCurrentUserFilter>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app)
         {
             if (env.IsDevelopment())
             {

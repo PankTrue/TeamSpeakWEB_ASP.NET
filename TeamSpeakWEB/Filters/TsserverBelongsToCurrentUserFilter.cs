@@ -32,7 +32,7 @@ namespace TeamSpeakWEB.Filters
             if (context.ActionArguments.ContainsKey("id"))
                 server_id = context.ActionArguments["id"];
             else
-                server_id = (context.ActionArguments.First().Value as Tsserver).Id;
+                server_id = (context.ActionArguments.First().Value as Tsserver)?.Id;
 
 
             var tsserver = db.Tsservers.Find(server_id);
@@ -40,7 +40,7 @@ namespace TeamSpeakWEB.Filters
 
             if (tsserver == null || tsserver.User.Id != current_user.Id)
             {
-                flasher.Flash("danger", "Этот сервер не существует или не пренадлежит вам");
+                flasher.Flash(Types.Danger, "Этот сервер не существует или не пренадлежит вам",true);
                 context.Result = new RedirectToActionResult("Index", "Cabinet", null);
             }
         }

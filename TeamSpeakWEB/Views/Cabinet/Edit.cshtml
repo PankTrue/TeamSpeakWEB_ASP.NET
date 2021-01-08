@@ -11,18 +11,14 @@
 
     <form asp-controller="Cabinet" asp-action="Update" asp-antiforgery="true">
 
-        <div class="border">
-            <ul class="hr">
-                <li><label>Доменное имя:</label></li>
-                <li>
-                    <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
-                        <input type="text" asp-for="Dns" value="@Model.Dns" placeholder="Введите новое доменное имя" class="form-control" />
-                        <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
-                        <span asp-validation-for="Dns"></span>
-                    </div>
-                </li>
-                <li><span id="dns_status">Введите домен(необязательно)</span></li>
-            </ul>
+        <div class="form-group">
+                    <label>Доменное имя:</label>
+                        <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
+                            <input type="text" asp-for="Dns" value="@Model.Dns" placeholder="Введите новое доменное имя" class="form-control" />
+                            <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
+                            <span asp-validation-for="Dns"></span>
+                        </div>
+                    <span id="dns_status">Введите домен(необязательно)</span>
         </div>
 
         <div class="border">

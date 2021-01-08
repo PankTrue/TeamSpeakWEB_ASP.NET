@@ -1,4 +1,4 @@
-﻿
+﻿@model Tsserver
 @{
     ViewData["Title"] = "Panel";
 }
@@ -18,14 +18,22 @@
 
         <div class="functions">
             <ul style="list-style-type: none">
-                <li> <a asp-controller="Cabinet" asp-action="Token" asp-route-id="@ViewBag.id" class="btn btn-primary">Токены</a></li>
+                <li> <a asp-controller="Cabinet" asp-action="Token" asp-route-id="@Model.Id" class="btn btn-primary">Токены</a></li>
                 <li> <a asp-controller="Cabinet" asp-action="Settings" asp-route-id="@ViewBag.id" class="btn btn-primary">Настройка</a></li>
                 <li> <a asp-controller="Cabinet" asp-action="Edit" asp-route-id="@ViewBag.id" class="btn btn-primary">Редактировать</a></li>
                 <li> <a asp-controller="Cabinet" asp-action="Backups" asp-route-id="@ViewBag.id" class="btn btn-primary">Бекапы</a></li>
                 <li> <a asp-controller="Cabinet" asp-action="TurnStatus" asp-route-id="@ViewBag.id" class="btn btn-primary">Вкл/Выкл</a></li>
                 <li> <a asp-controller="Cabinet" asp-action="Extend" asp-route-id="@ViewBag.id" class="btn btn-primary">Продлить</a></li>
                 <li> <a asp-controller="Cabinet" asp-action="Reset_Password" asp-route-id="@ViewBag.id" class="btn btn-primary">Сбросить права</a></li>
-                <li> <a asp-controller="Cabinet" asp-action="Destroy" asp-route-id="@ViewBag.id" class="btn btn-danger">Удалить</a></li>
+                @*<li> <a id="tsserver_delete" tsserver-id="@ViewBag.id" class="btn btn-danger">Удалить</a></li>*@
+                <li>
+                    <form asp-action="Delete" asp-route-id="@ViewBag.id" data-ajax="true">
+                        <button type="submit" class="btn btn-sm btn-danger d-none d-md-inline-block">
+                            Delete
+                        </button>
+                    </form>
+
+                </li>
             </ul>
         </div>
     </div>
@@ -34,7 +42,7 @@
     <div class="col-md-6">
 
         <div class="tsstatus">
-           @* <% panel = panel_gen.to_s.force_encoding("UTF-8") %>*@
+            @* <% panel = panel_gen.to_s.force_encoding("UTF-8") %>*@
             @*<%= @count_users %>/<%= @info['virtualserver_maxclients'] %> <br>*@
             @*<%= raw panel%>*@
         </div>
@@ -47,4 +55,41 @@
     </div>
 
 
+    <!-- Modal -->
+    <div class="modal" id="tsserver_delete" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Подтвердите действие</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Удалить teamspeak сервер?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Да</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 </div>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#tsserver_delete").click(function () {
+                $("#modal-delete").modal('show');
+
+            });
+
+        });
+    </script>
+}

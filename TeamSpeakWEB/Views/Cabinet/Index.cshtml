@@ -41,16 +41,16 @@
                 <td> @ts.TimePayment </td>
                 <td>
                     @{
-                        var left_time = (ts.TimePayment - DateTime.Now).Days;
+                        var leftTime = (ts.TimePayment - DateTime.Now).Days;
 
-                        if (left_time > 7){
-                            <h5 style="color: green">@left_time</h5>
+                        if (leftTime > 7){
+                            <h5 style="color: green">@leftTime</h5>
                         }
-                        else if (left_time < 0){
-                            <h5 style="color: red">@left_time</h5> 
+                        else if (leftTime < 0){
+                            <h5 style="color: red">@leftTime</h5> 
                         }
                         else{
-                            <h5 style="color: yellow">@left_time</h5>
+                            <h5 style="color: yellow">@leftTime</h5>
                         }
                     }
                 </td>

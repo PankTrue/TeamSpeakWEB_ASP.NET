@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TeamSpeakWEB</title>
 
-    
+    <!-- libs -->
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
     <link href="~/lib/twitter-bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+
+    <!-- custom -->
     <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/css/cabinet.css" rel="stylesheet" />
+    <link href="~/css/home.css" rel="stylesheet" />
+    <link href="~/css/teamspeak.css" rel="stylesheet" />
+    
     
 </head>
 <body>
@@ -32,7 +38,7 @@
         </nav>
     </header>
 
-    
+
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript">
         (function (d, w, c) {
@@ -123,14 +129,17 @@
     </footer>
 
 
-    <script src="~/js/site.js" asp-append-version="true"></script>
 
+    <!-- libs -->
     <script src="~/lib/font-awesome/js/all.min.js"></script>
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/jquery-validate/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/lib/popper.js/popper.min.js"></script>
     <script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/twitter-bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- custom -->
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
 
     @RenderSection("Scripts", required: false)
