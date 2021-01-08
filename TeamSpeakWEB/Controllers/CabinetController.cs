@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TeamSpeakWEB.Data;
+using TeamSpeakWEB.Filters;
 using TeamSpeakWEB.Models;
 
 namespace TeamSpeakWEB.Controllers
@@ -18,10 +19,10 @@ namespace TeamSpeakWEB.Controllers
         private readonly UserManager<User> userManager;
         private readonly IFlasher flasher;
 
-        public CabinetController(ApplicationDbContext db, UserManager<User> manager, IFlasher flasher)
+        public CabinetController(ApplicationDbContext db, UserManager<User> userManager, IFlasher flasher)
         {
             this.db = db;
-            this.userManager = manager;
+            this.userManager = userManager;
             this.flasher = flasher;
         }
 
@@ -44,15 +45,11 @@ namespace TeamSpeakWEB.Controllers
             return View();
         }
 
+        [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Edit(int id)
         {
             var tsserver = db.Tsservers.Find(id);
 
-            if (tsserver == null || tsserver.User.Id != GetCurrentUser().Id)
-            {
-                flasher.Flash("danger", "Этот сервер не существует или не пренадлежит вам");
-                return RedirectToAction("Index", "Cabinet");
-            }
             return View(tsserver);
         }
 
@@ -85,16 +82,12 @@ namespace TeamSpeakWEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Update(Tsserver tsserver)
         {
             var current_user = GetCurrentUser();
             var ts = db.Tsservers.Find(tsserver.Id);
 
-            if (ts == null || ts.User.Id != current_user.Id)
-            {
-                flasher.Flash("danger", "Сервер не найдет или вам не пренадлежит");
-                return RedirectToAction("Index","Cabinet");
-            }
 
             ts.Dns = tsserver.Dns;
             ts.Slots = tsserver.Slots;
@@ -113,18 +106,10 @@ namespace TeamSpeakWEB.Controllers
             return RedirectToAction("Index","Cabinet");
         }
 
-
         [HttpDelete]
+        [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Destroy(int id)
         {
-            var tsserver = db.Tsservers.Find(id);
-
-            if (tsserver == null || tsserver.User.Id != GetCurrentUser().Id)
-            {
-                flasher.Flash("danger", "Сервер не найдет или вам не пренадлежит");
-                return RedirectToAction("Index", "Cabinet");
-            }
-
             db.Tsservers.Remove(new Tsserver { Id = id});
 
             try {
@@ -149,16 +134,11 @@ namespace TeamSpeakWEB.Controllers
                 return Content("false");
         }
 
-        [Route("/Cabinet/Panel/{id:int}")]
+        [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Panel(int id)
         {
             ViewBag.id = id;
-            var tsserver = db.Tsservers.Find(id);
-            if (tsserver == null || tsserver.User.Id != GetCurrentUser().Id)
-            {
-                flasher.Flash("danger","Сервер не найдет или вам не пренадлежит");
-                return RedirectToAction("Index", "Cabinet");
-            }
+
             return View();
         }
 

@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TeamSpeakWEB.Data;
+using TeamSpeakWEB.Filters;
 using TeamSpeakWEB.Models;
 
 namespace TeamSpeakWEB
@@ -48,6 +49,10 @@ namespace TeamSpeakWEB
             services.AddFlashes();
 
             services.AddRazorPages();
+
+
+            //Custom filters
+            services.AddScoped<TsserverBelongsToCurrentUserFilter>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
