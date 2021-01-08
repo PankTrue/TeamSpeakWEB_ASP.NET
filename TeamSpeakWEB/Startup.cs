@@ -27,17 +27,11 @@ namespace TeamSpeakWEB
 
         public void ConfigureServices(IServiceCollection services)
         {
-            
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDatabaseDeveloperPageExceptionFilter();
-            
-            /*
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(Configuration.GetConnectionString("DefaultConnection"), ServerVersion.AutoDetect(Configuration.GetConnectionString("DefaultConnection")))
             );
-            */
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
 
             services.AddDefaultIdentity<User>(options =>
             {
@@ -45,8 +39,7 @@ namespace TeamSpeakWEB
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
 
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            })  .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
 
