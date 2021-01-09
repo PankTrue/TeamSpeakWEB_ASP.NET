@@ -1,13 +1,15 @@
 ﻿@model Tsserver
 @{
     ViewData["Title"] = "Panel";
+    ViewData["Header"] = $"Панель сервера {Model.Dns}.easy-ts.ru:{Model.Port}";
 }
 
-<h1>Panel</h1>
+<h3>@ViewData["Header"]</h3>
 
 <style>
     a.btn {
         width: 200px;
+        height: 35px;
     }
 </style>
 
@@ -19,21 +21,13 @@
         <div class="functions">
             <ul style="list-style-type: none">
                 <li> <a asp-controller="Cabinet" asp-action="Token" asp-route-id="@Model.Id" class="btn btn-primary">Токены</a></li>
-                <li> <a asp-controller="Cabinet" asp-action="Settings" asp-route-id="@ViewBag.id" class="btn btn-primary">Настройка</a></li>
-                <li> <a asp-controller="Cabinet" asp-action="Edit" asp-route-id="@ViewBag.id" class="btn btn-primary">Редактировать</a></li>
-                <li> <a asp-controller="Cabinet" asp-action="Backups" asp-route-id="@ViewBag.id" class="btn btn-primary">Бекапы</a></li>
-                <li> <a asp-controller="Cabinet" asp-action="TurnStatus" asp-route-id="@ViewBag.id" class="btn btn-primary">Вкл/Выкл</a></li>
-                <li> <a asp-controller="Cabinet" asp-action="Extend" asp-route-id="@ViewBag.id" class="btn btn-primary">Продлить</a></li>
-                <li> <a asp-controller="Cabinet" asp-action="Reset_Password" asp-route-id="@ViewBag.id" class="btn btn-primary">Сбросить права</a></li>
-                @*<li> <a id="tsserver_delete" tsserver-id="@ViewBag.id" class="btn btn-danger">Удалить</a></li>*@
-                <li>
-                    <form asp-action="Delete" asp-route-id="@ViewBag.id" data-ajax="true">
-                        <button type="submit" class="btn btn-sm btn-danger d-none d-md-inline-block">
-                            Delete
-                        </button>
-                    </form>
-
-                </li>
+                <li> <a asp-controller="Cabinet" asp-action="Settings" asp-route-id="@Model.Id" class="btn btn-primary">Настройка</a></li>
+                <li> <a asp-controller="Cabinet" asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Редактировать</a></li>
+                <li> <a asp-controller="Cabinet" asp-action="Backups" asp-route-id="@Model.Id" class="btn btn-primary">Бекапы</a></li>
+                <li> <a asp-controller="Cabinet" asp-action="TurnStatus" asp-route-id="@Model.Id" class="btn btn-primary">Вкл/Выкл</a></li>
+                <li> <a asp-controller="Cabinet" asp-action="Extend" asp-route-id="@Model.Id" class="btn btn-primary">Продлить</a></li>
+                <li> <a asp-controller="Cabinet" asp-action="Reset_Password" asp-route-id="@Model.Id" class="btn btn-primary">Сбросить права</a></li>
+                <li> <a asp-controller="Cabinet" asp-action="Destroy" asp-route-id="@Model.Id" class="btn btn-danger" onclick="return confirm('Вы действительно хотите удалить сервер?')">Удалить</a> </li>
             </ul>
         </div>
     </div>
@@ -56,8 +50,8 @@
 
 
     <!-- Modal -->
-    <div class="modal" id="tsserver_delete" tabindex="-1">
-        <div class="modal-dialog">
+    @*<div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Подтвердите действие</h5>
@@ -69,12 +63,14 @@
                     <p>Удалить teamspeak сервер?</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Да</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Нет</button>
+                    <button data-dismiss="modal" type="button" class="btn btn-default">Отмена</button>
+                    <button id="tsserver_delete_confirm" type="button" class="btn btn-danger">Удалить</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
+
+
 
 
 
@@ -84,12 +80,6 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $("#tsserver_delete").click(function () {
-                $("#modal-delete").modal('show');
 
-            });
-
-        });
     </script>
 }

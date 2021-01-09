@@ -104,11 +104,12 @@ namespace TeamSpeakWEB.Controllers
             return RedirectToAction("Index","Cabinet");
         }
 
-        [HttpDelete]
         [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Destroy(int id)
         {
-            _db.Tsservers.Remove(new Tsserver { Id = id});
+
+            _db.Tsservers.Remove(_db.Tsservers.Find(id));
+
 
             try {
                 _db.SaveChanges();
