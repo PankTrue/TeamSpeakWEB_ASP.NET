@@ -83,7 +83,6 @@ namespace TeamSpeakWEB.Controllers
         [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Update(Tsserver tsserver)
         {
-            var currentUser = GetCurrentUser();
             var ts = _db.Tsservers.Find(tsserver.Id);
 
 

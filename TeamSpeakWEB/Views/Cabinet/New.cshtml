@@ -6,70 +6,64 @@
 }
 
 <div class="buy">
+
     <h2>@ViewData["Title"]</h2>
 
     <form asp-controller="Cabinet" asp-action="Create" asp-antiforgery="true">
 
-        <div class="buy">
-            <div class="field border">
-                <ul class="hr">
-                    <li>Доменное имя</li>
-                    <li>
-                        <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
-                            <input type="text" asp-for="Dns" value="" placeholder="Введите доменное имя" id="dns_input" class="form-control" />
-                            <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
-                            <span asp-validation-for="Dns"></span>
-                        </div>
-                    </li>
-                    <li><span id="dns_status">Введите домен(необязательно)</span></li>
-                </ul>
+        <div class="form-group border">
+            <label>Доменное имя</label>
+            <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
+                <input type="text" asp-for="Dns" value="" placeholder="Введите доменное имя" id="dns_input" class="form-control"/>
+                <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
+                <span asp-validation-for="Dns"></span>
             </div>
+            <span id="dns_status">Введите домен(необязательно)</span>
+        </div>
 
-            <div class="border">
-                <label>Количество слотов</label>
-                <td><input id="slots" type="number" asp-for="Slots" value="10" min="10" max="512" /></td>
+        <div class="form-group border">
+            <label>Количество слотов</label>
+            <div class="input-group">
+                <div id="slots_slider" > </div>
+                <input id="slots" type="number" asp-for="Slots" value="10" min="10" max="512"/>
                 <span asp-validation-for="Slots"></span>
-            </div>
-
-
-            <div class="field border">
-                <div class="field">
-                    <label>Время оплаты</label>
-                    <select id="tsserver_time_payment" asp-for="TimePayment">
-                        <option value="1">1 месяц</option>
-                        <option value="2">2 месяца</option>
-                        <option value="3">3 месяца</option>
-                        <option value="6">6 месяцев</option>
-                        <option value="12">12 месяцев</option>
-                    </select>
-                    <span asp-validation-for="TimePayment"></span>
-                </div>
-            </div>
-
-            <div class="field border">
-                <h4>Стоимость: <span class="cost"></span>руб.</h4>
-                <h5><span class="lacks"></span></h5>
-                <h5>На вашем счету: @ViewBag.current_user.Money руб. <a href="/cabinet/pay">Пополнить</a></h5>
-            </div>
-
-            <div class="actions">
-                <input type="submit" value="Купить сервер" />
             </div>
         </div>
 
+
+        <div class="form-group border">
+            <label>Время оплаты</label>
+            <select id="tsserver_time_payment" asp-for="TimePayment">
+                <option value="1">1 месяц</option>
+                <option value="2">2 месяца</option>
+                <option value="3">3 месяца</option>
+                <option value="6">6 месяцев</option>
+                <option value="12">12 месяцев</option>
+            </select>
+            <span asp-validation-for="TimePayment"></span>
+        </div>
+
+        <div class="form-group border">
+            <h4>Стоимость: <span class="cost"></span>руб.</h4>
+            <h5><span class="lacks"></span></h5>
+            <h5>На вашем счету: @ViewBag.current_user.Money руб. <a href="/cabinet/pay">Пополнить</a></h5>
+        </div>
+
+        <div class="actions">
+            <input type="submit" class="btn btn-primary" value="Купить сервер"/>
+        </div>
     </form>
 
 </div>
 
 @section Scripts
 {
-    <script src="~/js/cabinet.js"></script>
-}
-
-<script>
+    <script>
         var UserMoney = parseInt(@(ViewBag.current_user.Money));
         var UserAutoExtension = true;
-        //var UserAutoExtension = Boolean(@*@ViewBag.current_user.auto_extension*@);
-</script>
 
+    </script>
+
+    <script src="~/js/cabinet.js"></script>
+}
 

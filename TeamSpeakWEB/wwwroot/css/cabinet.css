@@ -1,5 +1,16 @@
-﻿ul.hr {
-    margin: 0; 
+﻿#slots_slider {
+    float: left !important;
+    width: 300px !important;
+    margin: 12px;
+}
+
+#dns_status {
+    font-size: 80%;
+}
+
+
+ul.hr {
+    margin: 0;
     padding: 4px;
 }
 
