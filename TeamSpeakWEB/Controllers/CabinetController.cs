@@ -11,6 +11,7 @@ using TeamSpeakWEB.Models;
 namespace TeamSpeakWEB.Controllers
 {
     [Authorize]
+    [AutoValidateAntiforgeryToken]
     public class CabinetController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -38,7 +39,7 @@ namespace TeamSpeakWEB.Controllers
         {
             var currentUser = GetCurrentUser();
 
-            ViewBag.current_user = currentUser;
+            ViewBag.currentUser = currentUser;
 
             return View();
         }
@@ -46,13 +47,16 @@ namespace TeamSpeakWEB.Controllers
         [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Edit(int id)
         {
+            var currentUser = GetCurrentUser();
             var tsServer = _db.Tsservers.Find(id);
+
+            ViewBag.currentUser = currentUser;
+
 
             return View(tsServer);
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Create(Tsserver tsserver)
         {
             tsserver.TimePayment = (DateTime.Now.AddMonths(tsserver.TimePayment.Day));
@@ -79,7 +83,6 @@ namespace TeamSpeakWEB.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         [ServiceFilter(typeof(TsserverBelongsToCurrentUserFilter))]
         public IActionResult Update(Tsserver tsserver)
         {

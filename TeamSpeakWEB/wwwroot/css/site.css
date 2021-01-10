@@ -1,67 +1,85 @@
-﻿
-.main {
-    background-color: #eee;
-    margin-top: 30px;
+﻿/*site.css*/
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
+
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
 .footer {
-    height: 180px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
     background-image: url('/img/footer.jpg');
+}
+
+
+.main {
+    background-color: #eee;
+    padding-bottom: 200px;
+
 }
 
 .footerlinks {
     margin-top: 30px;
 }
 
-.copyright {
-    margin-top: 20px;
-}
-
-#main {
-    padding-bottom: 150px;
-}
-
-#footer {
-    position: relative;
-    margin-top: -150px;
-    height: 150px;
-    clear: both;
-}
-
-.clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
-}
-
-.clearfix {
-    display: inline-block;
-}
-
-* html .clearfix {
-    height: 1%;
-}
-
-.clearfix {
-    display: block;
-}
-
-.alert-notice {
-    background-color: #d9edf7;
-    border-color: #bce8f1;
-    color: #31708f;
-}
 
 .carousel {
-    margin-bottom: 4rem;
-}
-
-.carousel-caption {
-    bottom: 3rem;
-    z-index: 10;
+    margin-bottom: 50px;
 }
 
 .carousel-item {
@@ -77,44 +95,31 @@
     height: 32rem;
 }
 
-.marketing .col-lg-4 {
-    margin-bottom: 1.5rem;
+.mainimage {
+    width: 64px;
+}
+
+.icon {
+    width: 64px;
+    height: 64px;
+    margin: 25%;
+}
+
+
+h2 {
+    margin: 0;
+    color: #333;
+    #padding-top: 90px;
+    font-size: 52px;
+    font-family: "trebuchet ms", sans-serif;
+}
+
+.item {
+    background: #333;
     text-align: center;
+    height: 300px !important;
 }
 
-.marketing h2 {
-    font-weight: 400;
-}
-
-.marketing .col-lg-4 p {
-    margin-right: .75rem;
-    margin-left: .75rem;
-}
-
-.featurette-divider {
-    margin: 5rem 0; 
-}
-
-.featurette-heading {
-    font-weight: 200;
-    line-height: 1;
-    letter-spacing: -.05rem;
-}
-
-@media (min-width: 40em) {
-    .carousel-caption p {
-        margin-bottom: 1.25rem;
-        font-size: 1.25rem;
-        line-height: 1.4;
-    }
-
-    .featurette-heading {
-        font-size: 50px;
-    }
-}
-
-@media (min-width: 62em) {
-    .featurette-heading {
-        margin-top: 7rem;
-    }
+.carousel {
+    margin-top: 20px;
 }

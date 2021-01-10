@@ -1,29 +1,32 @@
-﻿@model Tsserver
+﻿@using Microsoft.AspNetCore.Identity
+@model Tsserver
+
+
 
 @{
     ViewData["Title"] = "Edit";
 }
 
-<h3>Редактирование сервера</h3>
-
 
 <div class="edit">
 
+    <h3>Редактирование сервера</h3>
+
     <form asp-controller="Cabinet" asp-action="Update" asp-antiforgery="true">
 
-        <div class="form-group">
-                    <label>Доменное имя:</label>
-                        <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
-                            <input type="text" asp-for="Dns" value="@Model.Dns" placeholder="Введите новое доменное имя" class="form-control" />
-                            <span class="input-group-addon" id="basic-addon2">.easy-ts.ru</span>
-                            <span asp-validation-for="Dns"></span>
-                        </div>
-                    <span id="dns_status">Введите домен(необязательно)</span>
+        @*<div class="form-group">
+            <label>Доменное имя:</label>
+            <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
+                <input type="text" asp-for="Dns" value="@Model.Dns" placeholder="Введите новое доменное имя" class="form-control"/>
+                <span class="input-group-addon">.easy-ts.ru</span>
+                <span asp-validation-for="Dns"></span>
+            </div>
+            <span id="dns_status">Введите домен(необязательно)</span>
         </div>
 
         <div class="border">
             <label>Кол-во слотов</label>
-            <input type="number" asp-for="Slots" value="@Model.Slots" class="form-control" />
+            <input type="number" asp-for="Slots" value="@Model.Slots" class="form-control"/>
 
         </div>
 
@@ -32,11 +35,59 @@
         </div>
 
         <div class="actions">
-            <input type="submit" value="Обновить сервер" />
+            <input type="submit" value="Обновить сервер"/>
         </div>
 
+        <input type="hidden" asp-for="Id" value="@Model.Id"/>*@
+        
+        
+        
+        
+        
+
+        <div class="form-group border">
+            <label>Доменное имя</label>
+            <div class="input-group col-xs-8 col-sm-6 col-md-5 col-lg-4">
+                <input type="text" asp-for="Dns" value="@Model.Dns" placeholder="Введите доменное имя" id="dns_input" class="form-control"/>
+                <span class="input-group-addon">.easy-ts.ru</span>
+                <span asp-validation-for="Dns"></span>
+            </div>
+            <span id="dns_status">Введите домен(необязательно)</span>
+        </div>
+
+        <div class="form-group border">
+            <label>Количество слотов</label>
+            <div class="input-group">
+                <div id="slots_slider" > </div>
+                <input id="slots" type="number" asp-for="Slots" value="@Model.Slots" min="10" max="512"/>
+                <span asp-validation-for="Slots"></span>
+            </div>
+        </div>
+
+
+        <div class="form-group border">
+            <h4>Стоимость: <span class="cost"></span>руб.</h4>
+            <h5><span class="lacks"></span></h5>
+            <h5>На вашем счету: @ViewBag.currentUser.Money руб. <a href="/cabinet/pay">Пополнить</a></h5>
+        </div>
+
+        <div class="actions">
+            <input type="submit" class="btn btn-primary" value="Обновить сервер"/>
+        </div>
+        
         <input type="hidden" asp-for="Id" value="@Model.Id" />
 
     </form>
+    
+    
+    @section Scripts{ 
+        <script>
+            var UserMoney = parseInt(@(ViewBag.currentUser.Money));
+            var UserAutoExtension = true;
+
+        </script>
+
+        <script src="~/js/cabinet.js"></script>
+    }
 
 </div>
