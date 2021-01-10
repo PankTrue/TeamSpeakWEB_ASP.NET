@@ -126,7 +126,6 @@ namespace TeamSpeakWEB.Controllers
             return RedirectToAction("Index", "Cabinet");
         }
 
-        [HttpPost]
         public IActionResult free_dns(string dns)
         {
             if (!_db.Tsservers.Where(id => id.Dns == dns).Any())

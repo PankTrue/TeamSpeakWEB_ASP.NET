@@ -49,7 +49,7 @@
         var dns = $('#dns_input').val();
         if ((/^[A-Za-z0-9_-]+$/.test(dns)) && dns != '') {
             $.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: "/cabinet/free_dns",
                 data: { dns: dns },
                 success: function (data) {
