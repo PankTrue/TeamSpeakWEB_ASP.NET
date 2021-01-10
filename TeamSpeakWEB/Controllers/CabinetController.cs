@@ -7,6 +7,7 @@ using System.Linq;
 using TeamSpeakWEB.Data;
 using TeamSpeakWEB.Filters;
 using TeamSpeakWEB.Models;
+using TeamSpeakWEB.Services;
 
 namespace TeamSpeakWEB.Controllers
 {
@@ -17,12 +18,14 @@ namespace TeamSpeakWEB.Controllers
         private readonly ApplicationDbContext _db;
         private readonly UserManager<User> _userManager;
         private readonly IFlasher _flasher;
+        private readonly TeamSpeakQuaryClient _teamspeakQuaryClient;
 
-        public CabinetController(ApplicationDbContext db, UserManager<User> userManager, IFlasher flasher)
+        public CabinetController(ApplicationDbContext db, UserManager<User> userManager, IFlasher flasher, TeamSpeakQuaryClient teamspeakQuaryClient)
         {
-            this._db = db;
-            this._userManager = userManager;
-            this._flasher = flasher;
+            _db = db;
+            _userManager = userManager;
+            _flasher = flasher;
+            _teamspeakQuaryClient = teamspeakQuaryClient;
         }
 
         public IActionResult Index()

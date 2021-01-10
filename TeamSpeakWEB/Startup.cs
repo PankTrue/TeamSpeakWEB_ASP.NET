@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using TeamSpeakWEB.Data;
 using TeamSpeakWEB.Filters;
 using TeamSpeakWEB.Models;
+using TeamSpeakWEB.Services;
 
 namespace TeamSpeakWEB
 {
@@ -63,6 +64,10 @@ namespace TeamSpeakWEB
 
             //Custom filters
             services.AddScoped<TsserverBelongsToCurrentUserFilter>();
+
+
+            //custom services
+            services.AddSingleton<TeamSpeakQuaryClient>();
         }
 
         public void Configure(IApplicationBuilder app)

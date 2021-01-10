@@ -9,5 +9,13 @@
       "Microsoft.Hosting.Lifetime": "Information"
     }
   },
-  "AllowedHosts": "*"
+  "AllowedHosts": "*",
+
+  "TeamSpeakQuery": {
+    "Hostname": "127.0.0.1",
+    "Port": 10011,
+    "Username": "serveradmin",
+    "Password": "somepassword",
+    "Api-Key":  "key" 
+  }
 }
