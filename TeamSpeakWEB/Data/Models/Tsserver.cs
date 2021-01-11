@@ -14,6 +14,9 @@ namespace TeamSpeakWEB.Models
         public int Id { get; set; }
 
         [Required]
+        public string Ip { get; set; }
+
+        [Required]
         public int Port { get; set; }
 
         [Required]
@@ -24,9 +27,6 @@ namespace TeamSpeakWEB.Models
 
         [Required]
         public DateTime TimePayment { get; set; }
-
-        [Required]
-        public bool State { get; set; }
 
         public virtual User User { get; set; }
 

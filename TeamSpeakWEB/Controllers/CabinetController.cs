@@ -3,9 +3,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.Extensions.Logging;
 using TeamSpeakWEB.Data;
+using TeamSpeakWEB.Data.ViewModels;
 using TeamSpeakWEB.Filters;
 using TeamSpeakWEB.Models;
 using TeamSpeakWEB.Services;
@@ -21,20 +25,34 @@ namespace TeamSpeakWEB.Controllers
         private readonly IFlasher _flasher;
         private readonly TeamSpeakQueryClient _teamspeakQueryClient;
         private readonly ILogger<CabinetController> _logger;
+        private readonly IMapper _mapper;
 
-        public CabinetController(ApplicationDbContext db, UserManager<User> userManager, IFlasher flasher, TeamSpeakQueryClient teamspeakQueryClient, ILogger<CabinetController> logger)
+        public CabinetController(ApplicationDbContext db, UserManager<User> userManager, IFlasher flasher,
+                                TeamSpeakQueryClient teamspeakQueryClient, ILogger<CabinetController> logger,
+                                IMapper mapper)
         {
             _db = db;
             _userManager = userManager;
             _flasher = flasher;
             _teamspeakQueryClient = teamspeakQueryClient;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public IActionResult Index()
         {
             var currentUser = GetCurrentUser();
-            var tsServer = _db.Tsservers.Where(id => (id.User.Id == currentUser.Id)).ToList();
+            var tsServer = _db.Tsservers.Where(id => (id.User.Id == currentUser.Id))
+                                                            .ProjectTo<TsserverView>(_mapper.ConfigurationProvider).ToList();
+
+
+            foreach (var ts in tsServer)
+            {
+                _teamspeakQueryClient.UseServer(ts.MachineId).Wait(1000);
+                var s = _teamspeakQueryClient.WhoAmI().Result;
+                ts.State = true;
+                //TODO доделать
+            }
 
             ViewBag.current_user = currentUser;
 
@@ -66,8 +84,8 @@ namespace TeamSpeakWEB.Controllers
         public IActionResult Create(Tsserver tsserver)
         {
             tsserver.TimePayment = (DateTime.Now.AddMonths(tsserver.TimePayment.Day));
-            tsserver.State = true;
             tsserver.MachineId = 0;
+            tsserver.Ip = "127.0.0.1";
             tsserver.Port = (new Random(DateTime.Now.Millisecond)).Next(65565);
             tsserver.User = GetCurrentUser();
 
@@ -75,10 +93,17 @@ namespace TeamSpeakWEB.Controllers
 
             try
             {
+                //var res = _teamspeakQueryClient.Client.Send($"servercreate virtualserver_name=TeamSpeak\\s]\\p[\\sServer " +
+                //                                                                        $"virtualserver_port = {new Random().Next(2000, 65565)} " +
+                //                                                                        $"virtualserver_maxclients = {tsserver.Slots}").Result;
+
+                var res = _teamspeakQueryClient.Client.Send("servercreate virtualserver_name=TeamSpeak_Server virtualserver_port=2000 virtualserver_maxclients=32").Result;
+
                 _db.SaveChanges();
             }
-            catch
+            catch(Exception e)
             {
+                _logger.Log(LogLevel.Error, e.Message);
                 _flasher.Flash("danger", "Не удалось создать сервер");
                 return RedirectToAction("Index", "Cabinet");
             }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Tsserver>
+﻿@model IEnumerable<TeamSpeakWEB.Data.ViewModels.TsserverView>
 
 
 @{
@@ -36,7 +36,7 @@
             {
             <tr>
                 <td> @(ts.Dns + ".easy-ts.ru") </td>
-                <td> 127.0.0.1: @ts.Port </td>
+                <td> @ts.Ip:@ts.Port </td>
                 <td> @ts.Slots </td>
                 <td> @ts.TimePayment </td>
                 <td>
@@ -54,7 +54,7 @@
                         }
                     }
                 </td>
-                <td> TODO </td>
+                <td>  </td>
                 <td> <a asp-controller="Cabinet" asp-action="Panel" asp-route-id="@ts.Id" class="btn btn-primary">Панель</a> </td>
             </tr>
             }

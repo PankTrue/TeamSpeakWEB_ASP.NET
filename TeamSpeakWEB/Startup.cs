@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using TeamSpeakWEB.Data;
 using TeamSpeakWEB.Filters;
 using TeamSpeakWEB.Models;
@@ -59,6 +60,9 @@ namespace TeamSpeakWEB
 
             services.AddFlashes();
             services.AddRazorPages();
+
+            services.AddAutoMapper
+                (typeof(AutoMapperProfile).Assembly);
 
             //Custom filters
             services.AddScoped<TsserverBelongsToCurrentUserFilter>();
