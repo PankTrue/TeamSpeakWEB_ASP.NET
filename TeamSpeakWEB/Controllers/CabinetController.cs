@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using TeamSpeakWEB.Data;
 using TeamSpeakWEB.Filters;
 using TeamSpeakWEB.Models;
@@ -18,14 +19,16 @@ namespace TeamSpeakWEB.Controllers
         private readonly ApplicationDbContext _db;
         private readonly UserManager<User> _userManager;
         private readonly IFlasher _flasher;
-        private readonly TeamSpeakQuaryClient _teamspeakQuaryClient;
+        private readonly TeamSpeakQueryClient _teamspeakQueryClient;
+        private readonly ILogger<CabinetController> _logger;
 
-        public CabinetController(ApplicationDbContext db, UserManager<User> userManager, IFlasher flasher, TeamSpeakQuaryClient teamspeakQuaryClient)
+        public CabinetController(ApplicationDbContext db, UserManager<User> userManager, IFlasher flasher, TeamSpeakQueryClient teamspeakQueryClient, ILogger<CabinetController> logger)
         {
             _db = db;
             _userManager = userManager;
             _flasher = flasher;
-            _teamspeakQuaryClient = teamspeakQuaryClient;
+            _teamspeakQueryClient = teamspeakQueryClient;
+            _logger = logger;
         }
 
         public IActionResult Index()

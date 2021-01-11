@@ -23,11 +23,11 @@ namespace TeamSpeakWEB
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
-            this.env = env;
+            this._env = env;
         }
 
         public IConfiguration Configuration { get; }
-        private readonly IWebHostEnvironment env;
+        private readonly IWebHostEnvironment _env;
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -50,7 +50,7 @@ namespace TeamSpeakWEB
             var mvcBuilder = services.AddControllersWithViews();
 
             #if DEBUG
-            if (env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
                 mvcBuilder.AddRazorRuntimeCompilation();
             }
@@ -58,21 +58,19 @@ namespace TeamSpeakWEB
 
 
             services.AddFlashes();
-
             services.AddRazorPages();
-
 
             //Custom filters
             services.AddScoped<TsserverBelongsToCurrentUserFilter>();
 
 
             //custom services
-            services.AddSingleton<TeamSpeakQuaryClient>();
+            services.AddSingleton<TeamSpeakQueryClient>();
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (_env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseMigrationsEndPoint();
@@ -89,7 +87,6 @@ namespace TeamSpeakWEB
 
             app.UseAuthentication();
             app.UseAuthorization();
-
 
 
             app.UseEndpoints(endpoints =>
